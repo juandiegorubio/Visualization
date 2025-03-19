@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    min-height: 100% !important;
+    width: 100%;
+    height: 100%;
+}
+
+.tree_content {
+    width: max-content;
+    height: max-content;
+    background-color: antiquewhite;
+}
+
+
+.node {
+    border: 1px solid blueviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+    min-height: 100px;
+    background-color: antiquewhite;
+}
+
+.node_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+
+    min-width: 80%;
+    max-width: 95%;
+    min-height: 50%;
+    max-height: 90%;
+    
+    width: 90%;
+    height: 50%;
+
+}
+
+.node_element {
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.square {
+    border-radius: 0px;
+}
+
+.rounded_square {
+    border-radius: 20px;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+canvas {
+    border: 1px solid burlywood;
+}
