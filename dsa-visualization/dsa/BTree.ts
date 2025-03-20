@@ -20,6 +20,10 @@ export class TreeNode {
         return this.children[pos];
     }
 
+    set_child(child : TreeNode, pos: number) {
+        this.children.splice(pos, 0, child);
+    }
+
     find_interval(
         element: number
     ) : number {
@@ -56,12 +60,13 @@ export default class Tree {
     
     /*** Properties ***/
     root: TreeNode;
-    max_size: number;
+    node_max_size: number;
+    total_nodes: number;
 
-
-    constructor(max_size: number) {
+    constructor(node_max_size: number) {
         this.root = new TreeNode();
-        this.max_size = max_size;
+        this.node_max_size = node_max_size;
+        this.total_nodes = 1;
     }
 
     find_leaf(
@@ -76,34 +81,36 @@ export default class Tree {
 
 
     insert(element: number) : ({
-        leaf: TreeNode, 
+        node: TreeNode, 
         position: number
     }) {
-        let leaf : TreeNode = this.find_leaf(element);
-        const pos : number = leaf.push(element);
-        if(leaf.length() > this.max_size) leaf = this.split(leaf);
-        return {leaf, position: pos};
+        let node : TreeNode = this.find_leaf(element);
+        let pos : number = node.push(element);
+        if(node.length() > this.node_max_size) {
+            this.split_leaf(node);
+        }
+        return {node: node, position: pos};
     }
 
-    split(leaf: TreeNode) : TreeNode {
-        const middle : number = Math.floor(leaf.length() / 2);
+    split_leaf(node: TreeNode) {
 
-        // Left leaf
-        const left_child : TreeNode = new TreeNode();
-        for(let i=0; i < middle; ++i) left_child.push(leaf.elements[i]);
-        left_child.parent = leaf;
-        left_child.depth = leaf.depth+1;
-        leaf.children.push(left_child);
+        if(node.parent == null) node.parent = new TreeNode();
+        const parent : TreeNode = node.parent;
         
-        // Right leaf
-        const right_child : TreeNode = new TreeNode();
-        for(let i=middle+1; i < leaf.length(); ++i) right_child.push(leaf.elements[i]);
-        right_child.parent = leaf;
-        right_child.depth = leaf.depth+1;
-        leaf.children.push(right_child);
-
-        // TODO: balance if deepest leaf is way deeper than expected
-        return leaf;
+        if(parent.length() == this.node_max_size) { // We need to split parent
+            // TODO
+        }
+        
+        else {
+            const middle = Math.floor(node.length() / 2);
+            const pos = parent.push(middle);
+            const right_node : TreeNode = new TreeNode();
+            for(let i = middle+1; i < node.length(); ++i) 
+                right_node.push(node.elements[i]);
+            right_node.parent = parent;
+            right_node.depth = parent.depth+1;
+            parent.set_child(right_node, pos+1);
+        }
     }
 
     // TODO: related to balance in split function
@@ -114,7 +121,7 @@ export default class Tree {
 
     balance(node: TreeNode) {
         let balance_root : TreeNode = node;
-        while(balance_root.parent != null && balance_root.parent.length() == this.max_size) 
+        while(balance_root.parent != null && balance_root.parent.length() == this.node_max_size) 
             balance_root = balance_root.parent;
         
         const tree_elements : number[] = this.retrieve_elements(balance_root);
