@@ -87,18 +87,20 @@ export default class Tree {
         let node : TreeNode = this.find_leaf(element);
         let pos : number = node.push(element);
         if(node.length() > this.node_max_size) {
-            this.split_leaf(node);
+            this.split(node);
         }
         return {node: node, position: pos};
     }
 
-    split_leaf(node: TreeNode) {
-
+    split(node: TreeNode) {
         if(node.parent == null) node.parent = new TreeNode();
         const parent : TreeNode = node.parent;
         
         if(parent.length() == this.node_max_size) { // We need to split parent
-            // TODO
+            let balance_root : TreeNode = parent;
+            while(balance_root.parent != null && balance_root.parent.length() == this.node_max_size) 
+                balance_root = balance_root.parent!;
+            this.balance(balance_root);
         }
         
         else {
@@ -113,21 +115,9 @@ export default class Tree {
         }
     }
 
-    // TODO: related to balance in split function
-    find_min_depth() : number {
-        return 0;
-    }
-
-
     balance(node: TreeNode) {
-        let balance_root : TreeNode = node;
-        while(balance_root.parent != null && balance_root.parent.length() == this.node_max_size) 
-            balance_root = balance_root.parent;
+        let elements : number[] = this.retrieve_elements(node).flat();
         
-        const tree_elements : number[] = this.retrieve_elements(balance_root);
-
-
-        console.log("BTree balanced!");
     }
 
 
