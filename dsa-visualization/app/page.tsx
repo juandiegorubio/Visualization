@@ -1,24 +1,22 @@
 import Image from "next/image";
-import Tree from '../dsa/BTree';
+import { TreeNode } from "@/dsa/BTree";
+import Node_Render from "@/dsa/TreeNode";
 
 export default function Home() {
 
-  const myTree : Tree = new Tree(2);
-  myTree.insert(1);
-  myTree.insert(2);
-  myTree.insert(3); 
-
+  const new_node : TreeNode = new TreeNode([1,2,3]);
+  
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
+        {/* <Image
           className="dark:invert"
           src="/next.svg"
           alt="Next.js logo"
           width={180}
           height={38}
           priority
-        />
+        /> */}
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
@@ -39,13 +37,13 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
+            {/* <Image
               className="dark:invert"
               src="/vercel.svg"
               alt="Vercel logomark"
               width={20}
               height={20}
-            />
+            /> */}
             Deploy now
           </a>
           <a
@@ -57,6 +55,8 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        <Node_Render node={new_node}></Node_Render>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
